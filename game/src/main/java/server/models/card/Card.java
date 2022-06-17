@@ -1,4 +1,4 @@
-package models.card;
+package server.models.card;
 
 public class Card {
 

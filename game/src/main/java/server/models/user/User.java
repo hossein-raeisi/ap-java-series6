@@ -1,9 +1,14 @@
-package models.user;
+package server.models.user;
 
 import java.util.ArrayList;
+import models.card.Number;
 
 public abstract class User{
     public int id;
-    ArrayList<Number> numbers = new ArrayList<>();
+    public ArrayList<Number> numbers = new ArrayList<>();
+
+    public Number play(Number lastNumber){
+        return null;
+    }
 
 }
