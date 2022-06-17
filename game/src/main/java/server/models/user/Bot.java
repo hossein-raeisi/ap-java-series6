@@ -1,5 +1,5 @@
 package server.models.user;
-import models.card.Number;
+import server.models.card.Number;
 
 public class Bot extends User{
 

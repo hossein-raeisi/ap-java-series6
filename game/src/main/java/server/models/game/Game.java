@@ -1,8 +1,8 @@
 package server.models.game;
-import models.card.Level;
-import models.card.Ninja;
-import models.card.Number;
-import models.user.User;
+import server.models.card.Level;
+import server.models.card.Ninja;
+import server.models.card.Number;
+import server.models.user.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 

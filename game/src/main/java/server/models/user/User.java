@@ -1,7 +1,7 @@
 package server.models.user;
 
 import java.util.ArrayList;
-import models.card.Number;
+import server.models.card.Number;
 
 public abstract class User{
     public int id;

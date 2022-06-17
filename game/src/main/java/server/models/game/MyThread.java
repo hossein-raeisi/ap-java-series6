@@ -1,6 +1,6 @@
 package server.models.game;
 
-import models.user.User;
+import server.models.user.User;
 
 public class MyThread extends Thread{
     Game game;
