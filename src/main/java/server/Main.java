@@ -1,19 +1,20 @@
 package server;
 
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import io.grpc.stub.StreamObserver;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+import static spark.Spark.*;
+
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 public class Main {
     public static final int SERVER_PORT = 5555;
 
     public static void main(String[] args) {
-//        Server server =
-//                ServerBuilder.forPort(SERVER_PORT)
-//                        .addService(new ())
-//                        .build();
+        get("/hello", Main::handleRequest);
     }
+
+    public static String handleRequest(Request request, Response response) {
+
+    }
+
 }
