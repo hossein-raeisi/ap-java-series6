@@ -1,18 +1,29 @@
 package server.models.user;
-import server.models.card.Number;
+
+
 
 public class Bot extends User{
-
+    int lastNumber = 0;
 
     @Override
-    public Number play(Number lastNumber) {
+    public int play(int lastNumber) {
         super.play(lastNumber);
-
         try {
-            Thread.sleep(5000);
+            Thread.sleep((numbers.get(0)-lastNumber)* 1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return this.numbers.get(0);
+        int number = this.numbers.get(0);
+        this.numbers.remove(number);
+        this.lastNumber = number;
+        return number;
+    }
+
+    @Override
+    public String toString() {
+        return "Bot{" +
+                "id=" + id +
+                "cards number=" + numbers.size()+
+                '}';
     }
 }

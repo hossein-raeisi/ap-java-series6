@@ -14,7 +14,15 @@ public class MyThread extends Thread{
     public void run() {
         super.run();
         while (user.numbers.size()!=0){
-            user.play(game.lastNumber);
+            int number = user.play(game.lastNumber);
+            try {
+                game.semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(number != 1)
+                game.update(number,false);
+            else game.useNinja();
         }
     }
 }
