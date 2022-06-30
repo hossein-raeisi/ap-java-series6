@@ -7,7 +7,6 @@ public class Bot extends User{
 
     @Override
     public int play(int lastNumber) {
-        super.play(lastNumber);
         try {
             Thread.sleep((numbers.get(0)-lastNumber)* 1000L);
         } catch (InterruptedException e) {
