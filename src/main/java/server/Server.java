@@ -2,9 +2,9 @@ package server;
 
 import static spark.Spark.*;
 
+import server.api.GameApi;
+import server.api.UserApi;
 import server.security.SecurityApi;
-import spark.Request;
-import spark.Response;
 
 public class Server {
     public static Server server;
@@ -19,21 +19,31 @@ public class Server {
 
     public void start(int server_port) {
         port(server_port);
+        mapUrls();
+    }
 
+    public void mapUrls() {
         path("/api", () -> {
             path("/user", () -> {
+                get("/getUserInfo", (request, response) -> UserApi.getUserInfo(request));
+            });
+
+            path("/game", () -> {
+                post("/createGame", (request, response) -> GameApi.createGame(request));
+                post("/joinGame", (request, response) -> GameApi.joinGame(request));
+                get("/getUsersInfo", (request, response) -> GameApi.getUsersInfo(request));
+                get("isUpdated", (request, response) -> GameApi.isUpdated(request));
+            });
+
+            path("/play", () -> {
 
             });
 
-           path("/game", () -> {
-
-           });
-
-           path("/auth", () -> {
-               get("login", SecurityApi.login);
-           });
+            path("/auth", () -> {
+                get("/login", (request, response) -> SecurityApi.login(request));
+                post("/logout", (request, response) -> SecurityApi.logout(request));
+            });
 
         });
-
     }
 }

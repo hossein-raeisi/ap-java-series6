@@ -7,8 +7,4 @@ public class Main {
         Server server = Server.getAnInstance();
         server.start(SERVER_PORT);
     }
-
-    private void mapUrls() {
-
-    }
 }
