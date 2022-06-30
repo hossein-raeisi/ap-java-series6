@@ -24,4 +24,9 @@ public class GameApi {
         // TODO
         return null;
     }
+
+    public static Object getGameInfo(Request request) {
+        // TODO
+        return null;
+    }
 }
