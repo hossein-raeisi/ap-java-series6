@@ -1,7 +1,7 @@
-package models.game;
+package server.models.game;
 
-import models.card.Ninja;
-import models.user.User;
+import server.models.card.Ninja;
+import server.models.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package models.user;
+package server.models.user;
 
 import java.util.ArrayList;
 
