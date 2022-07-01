@@ -5,28 +5,28 @@ import spark.Response;
 
 public class GameApi {
 
-    public static Response createGame(Request request, Response response) {
+    public static String createGame(Request request, Response response) {
         // TODO
-        return null;
+        return response.body();
     }
 
-    public static Response joinGame(Request request, Response response) {
+    public static String joinGame(Request request, Response response) {
         // TODO
-        return null;
+        return response.body();
     }
 
-    public static Response getUsersInfo(Request request, Response response) {
+    public static String getUsersInfo(Request request, Response response) {
         // TODO
-        return null;
+        return response.body();
     }
 
-    public static Response isUpdated(Request request, Response response) {
+    public static String isUpdated(Request request, Response response) {
         // TODO
-        return null;
+        return response.body();
     }
 
-    public static Object getGameInfo(Request request, Response response) {
+    public static String getGameInfo(Request request, Response response) {
         // TODO
-        return null;
+        return response.body();
     }
 }

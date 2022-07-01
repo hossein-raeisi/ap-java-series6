@@ -28,7 +28,7 @@ public class Server {
 
     public void mapUrls() {
         path("/api", () -> {
-//            before("/*", (request, response) -> Control.validateRequest(request));
+            before("/*", (request, response) -> Control.validateRequest(request));
 
             path("/test", () -> {
                 get("/hello", Server::TestApi);
@@ -58,12 +58,10 @@ public class Server {
         });
     }
 
-    public static Response TestApi(Request request, Response response) {
-        String authToken = Control.generateAuthToken();
-        request.session(true);
-        Control.addAuthToken(request.session(), authToken);
+    public static String TestApi(Request request, Response response) {
+        System.out.println(request.session().isNew());
 
         response.body("fuck you");
-        return response;
+        return response.body();
     }
 }

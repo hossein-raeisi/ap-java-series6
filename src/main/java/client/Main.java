@@ -1,17 +1,11 @@
 package client;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
+import client.security.Control;
 
 public class Main {
 
     public static void main(String[] args) {
-        var client = HttpClient.newHttpClient();
+        Control.logIn();
 
-        var request = HttpRequest.newBuilder()
-                .uri(URI.create(""))
-                .header("", "")
-                .build();
     }
 }

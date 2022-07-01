@@ -9,21 +9,21 @@ import spark.Response;
 
 public class PlayApi {
 
-    public static Response playNumber(Request request, Response response) {
+    public static String playNumber(Request request, Response response) {
         Player player = Control.getPlayerFromAuthToken(request.headers("Auth-Token"));
         Game game = Control.getGameFromAuthToken(request.headers("Auth-Token"));
         int number = Integer.parseInt(request.body());
 
         response.body(String.valueOf(PlayHelper.playNumber(player, game, number)));
 
-        return response;
+        return response.body();
     }
 
-    public static Response playNinja(Request request, Response response) {
+    public static String playNinja(Request request, Response response) {
         Game game = Control.getGameFromAuthToken(request.headers("Auth-Token"));
 
         response.body(String.valueOf(PlayHelper.playNinja(game)));
 
-        return response;
+        return response.body();
     }
 }

@@ -5,8 +5,8 @@ import spark.Response;
 
 public class UserApi {
 
-    public static Response getUserInfo(Request request, Response response) {
+    public static String getUserInfo(Request request, Response response) {
         // TODO
-        return null;
+        return response.body();
     }
 }
