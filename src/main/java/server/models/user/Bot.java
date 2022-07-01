@@ -3,7 +3,7 @@ package server.models.user;
 
 
 public class Bot extends User{
-    int lastNumber = 0;
+    public int lastNumber = 0;
 
     public int play(int lastNumber) {
         try {
@@ -12,7 +12,7 @@ public class Bot extends User{
             e.printStackTrace();
         }
         int number = this.numbers.get(0);
-        this.numbers.remove(number);
+        this.numbers.remove(Integer.valueOf(number));
         this.lastNumber = number;
         return number;
     }
