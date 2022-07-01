@@ -119,4 +119,8 @@ public class Game {
     public boolean isUpdated() {
         return updated;
     }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
 }
