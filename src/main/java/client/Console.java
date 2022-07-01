@@ -1,14 +1,11 @@
 package client;
 
-import client.exceptions.WrongUserType;
 import commons.dataClasses.GameInfo;
 import commons.dataClasses.UserInfo;
-import server.models.user.Bot;
-import server.models.user.Player;
-import server.models.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Console {
 
@@ -50,5 +47,20 @@ public class Console {
         System.out.println(
                 "your cards: " + Arrays.toString(userInfo.cards)
         );
+    }
+
+    int getNumberOrNinja(){
+        Scanner sc = new Scanner(System.in);
+        int number;
+        while (true){
+            String input = sc.next();
+            try{
+                number = Integer.parseInt(input);
+            }catch (NumberFormatException nfe){
+                continue;
+            }
+            break;
+        }
+        return number;
     }
 }
