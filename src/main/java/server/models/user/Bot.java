@@ -5,7 +5,6 @@ package server.models.user;
 public class Bot extends User{
     int lastNumber = 0;
 
-    @Override
     public int play(int lastNumber) {
         try {
             Thread.sleep((numbers.get(0)-lastNumber)* 1000L);

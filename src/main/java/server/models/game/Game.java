@@ -1,4 +1,5 @@
 package server.models.game;
+import server.models.user.Bot;
 import server.models.user.User;
 
 import java.time.LocalTime;
@@ -14,7 +15,7 @@ public class Game {
     int life;
     int ninjaNumber = 2;
     Semaphore semaphore = new Semaphore(1);
-    volatile int lastNumber;
+    public volatile int lastNumber;
     int level = 0;
     public LocalTime time;
     boolean updated;
@@ -52,7 +53,8 @@ public class Game {
         threads.clear();
 
         for (User user : users) {
-            new MyThread(this, user);
+            if(user instanceof Bot)
+                new MyThread(this, user);
         }
         for (MyThread thread : threads) {
             thread.start();
@@ -66,8 +68,14 @@ public class Game {
         }
     }
 
-    void update(int number, boolean isNinja){
+    public boolean update(int number, boolean isNinja){
+        if(number == -1) return false;
         // TODO number must be removed from its owner list
+        try {
+            this.semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         boolean flag = false;
 
         for (User user : users) {
@@ -81,9 +89,11 @@ public class Game {
         lastNumber = number;
         semaphore.release();
         updated = true;
+        return true;
     }
 
-    void useNinja(){
+    public boolean useNinja(){
+        if(this.ninjaNumber == 0) return false;
         int max =0;
         for (User user : users) {
             int min = Math.max(max,user.numbers.get(0));
@@ -91,6 +101,7 @@ public class Game {
             max = Math.max(min,max);
         }
         update(max,true);
+        return true;
     }
 
     void loseLife(){
@@ -102,7 +113,7 @@ public class Game {
     }
 
     void gameOver(){
-
+        // TODO
     }
 
     public boolean isUpdated() {

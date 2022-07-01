@@ -13,8 +13,5 @@ public abstract class User{
         id = ++idCounter;
     }
 
-    public int play(int lastNumber){
-        return 0;
-    }
 
 }
