@@ -70,7 +70,6 @@ public class Game {
 
     public boolean update(int number, boolean isNinja){
         if(number == -1) return false;
-        // TODO number must be removed from its owner list
         try {
             this.semaphore.acquire();
         } catch (InterruptedException e) {
@@ -79,6 +78,7 @@ public class Game {
         boolean flag = false;
 
         for (User user : users) {
+            user.numbers.removeIf(n -> n== number);
             flag = flag || user.numbers.removeIf(n -> n < number);
         }
         if(flag&&(!isNinja)){
