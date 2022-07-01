@@ -7,6 +7,8 @@ import server.api.PlayApi;
 import server.api.UserApi;
 import server.security.SecurityApi;
 import server.security.Control;
+import spark.Request;
+import spark.Response;
 
 public class Server {
     public static Server server;
@@ -26,29 +28,42 @@ public class Server {
 
     public void mapUrls() {
         path("/api", () -> {
-            before("/*", (request, response) -> Control.validateRequest(request));
+//            before("/*", (request, response) -> Control.validateRequest(request));
+
+            path("/test", () -> {
+                get("/hello", Server::TestApi);
+            });
 
             path("/user", () -> {
-                get("/getUserInfo", (request, response) -> UserApi.getUserInfo(request));
+                get("/getUserInfo", UserApi::getUserInfo);
             });
 
             path("/game", () -> {
-                post("/createGame", (request, response) -> GameApi.createGame(request));
-                post("/joinGame", (request, response) -> GameApi.joinGame(request));
-                get("/getUsersInfo", (request, response) -> GameApi.getUsersInfo(request));
-                get("/isUpdated", (request, response) -> GameApi.isUpdated(request));
-                get("/gameInfo", (request, response) -> GameApi.getGameInfo(request));
+                post("/createGame", GameApi::createGame);
+                post("/joinGame", GameApi::joinGame);
+                get("/getUsersInfo", GameApi::getUsersInfo);
+                get("/isUpdated", GameApi::isUpdated);
+                get("/gameInfo", GameApi::getGameInfo);
             });
 
             path("/play", () -> {
-                post("/playNumber", (request, response) -> PlayApi.playNumber(request));
-                post("/playNinja", (request, response) -> PlayApi.playNinja(request));
+                post("/playNumber", PlayApi::playNumber);
+                post("/playNinja", PlayApi::playNinja);
             });
 
             path("/auth", () -> {
-                get("/login", (request, response) -> SecurityApi.login(request));
-                post("/logout", (request, response) -> SecurityApi.logout(request));
+                get("/login", SecurityApi::login);
+                post("/logout", SecurityApi::logout);
             });
         });
+    }
+
+    public static Response TestApi(Request request, Response response) {
+        String authToken = Control.generateAuthToken();
+        request.session(true);
+        Control.addAuthToken(request.session(), authToken);
+
+        response.body("fuck you");
+        return response;
     }
 }

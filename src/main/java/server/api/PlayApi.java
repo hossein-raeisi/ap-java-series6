@@ -5,12 +5,12 @@ import spark.Response;
 
 public class PlayApi {
 
-    public static Response playNumber(Request request) {
+    public static Response playNumber(Request request, Response response) {
         // TODO
         return null;
     }
 
-    public static Response playNinja(Request request) {
+    public static Response playNinja(Request request, Response response) {
         // TODO
         return null;
     }

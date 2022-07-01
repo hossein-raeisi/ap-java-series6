@@ -3,14 +3,14 @@ package client.security;
 import java.net.http.HttpRequest;
 
 public class Control {
-    private static String token;
+    private static String authToken;
 
     public static HttpRequest.Builder addSecurityHeaders(HttpRequest.Builder builder) {
-        builder.header("token", token);
+        builder.header("Auth-Token", authToken);
         return builder;
     }
 
-    public static void setToken(String token) {
-        Control.token = token;
+    public static void setAuthToken(String authToken) {
+        Control.authToken = authToken;
     }
 }
