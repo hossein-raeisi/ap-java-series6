@@ -1,10 +1,12 @@
 package server.models.game;
 import server.models.user.Bot;
+import server.models.user.Player;
 import server.models.user.User;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
@@ -23,15 +25,27 @@ public class Game {
     public Game(ArrayList<User> users){
         this.users = users;
         life = users.size();
-        int maxLevel = 100 / life;
+        int maxLevel = 100 / users.size();
 
-        while (++level <= maxLevel) {
+        while (++level <= maxLevel && life>0) {
             time = LocalTime.now();
             if(Arrays.asList(3,6,9).contains(level)) life++;
             if(Arrays.asList(2,5,8).contains(level)) ninjaNumber++;
 
             setCards();
             setAndRunThreads();
+            resetBotsTiming();
+            lastNumber = 0;
+        }
+        if(life != 0) gameOver(true);
+
+    }
+    void resetBotsTiming(){
+        for (User user :
+                users) {
+            if (user instanceof Player) continue;
+            Bot bot = (Bot) user;
+            bot.lastNumber = 0;
         }
     }
 
@@ -46,6 +60,10 @@ public class Game {
         }
         for (int i = 0; i < users.size(); i++) {
             users.get(i).numbers = new ArrayList<>(randomNumbers.subList(i*level,(i+1)*level));
+        }
+        for (User user :
+                users) {
+            Collections.sort(user.numbers);
         }
     }
 
@@ -108,12 +126,18 @@ public class Game {
         life--;
 
         if(life == 0){
-            gameOver();
+            gameOver(false);
         }
     }
 
-    void gameOver(){
-        // TODO
+    void gameOver(boolean victory){
+        for (Thread thread :
+                threads) {
+            if(thread != Thread.currentThread())
+                thread.stop();
+        }
+        System.out.println(victory?"You won!":"You lost");
+        Thread.currentThread().stop();
     }
 
     public boolean isUpdated() {
