@@ -131,7 +131,13 @@ public class Game {
     }
 
     void gameOver(boolean victory){
-        // TODO
+        for (Thread thread :
+                threads) {
+            if(thread != Thread.currentThread())
+                thread.stop();
+        }
+        System.out.println(victory?"You won!":"You lost");
+        Thread.currentThread().stop();
     }
 
     public boolean isUpdated() {
