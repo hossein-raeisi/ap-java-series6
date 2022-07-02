@@ -39,6 +39,9 @@ public class Control {
 
         authToken = String.valueOf(response.headers().firstValue("auth-token").stream().toArray()[0]);
         playerId = String.valueOf(response.headers().firstValue("player-id").stream().toArray()[0]);
+
+        setAuthToken(authToken);
+        setPlayerId(playerId);
     }
 
     public static void createGame(){
@@ -82,9 +85,8 @@ public class Control {
         UserInfo playerInfo = getPlayerInfo();
         client.setGameInfo(gameInfo);
         client.setUserInfo(playerInfo);
-        Console.getInstance().print(gameInfo,usersInfo(),playerInfo.id);
+        Console.getInstance().print(gameInfo, getUsersInfo(),playerInfo.id);
     }
-
 
     public static GameInfo getGameInfo(){
         Client client = Client.getAnInstance();
@@ -100,7 +102,7 @@ public class Control {
         return gson.fromJson(response.body(),UserInfo.class);
     }
 
-    public static ArrayList<UserInfo> usersInfo(){
+    public static ArrayList<UserInfo> getUsersInfo(){
         Client client = Client.getAnInstance();
         var request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(""));
         var response = client.sendSecureRequest(Client.Apis.Game_GetUsersInfo,request);

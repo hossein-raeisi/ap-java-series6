@@ -12,6 +12,7 @@ public class SecurityApi {
         Control.addAuthToken(authToken, player);
 
         response.header("Auth-Token", authToken);
+        response.header("Player-Id", player.id);
         response.status(200);
         response.body("logged in successfully");
 

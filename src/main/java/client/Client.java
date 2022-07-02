@@ -73,7 +73,7 @@ public class Client {
 
     public HttpResponse<String> sendRequest(Apis api, HttpRequest.Builder requestBuilder) {
         try {
-            return httpClient.send(requestBuilder.uri(URI.create(urls.get(api))).build(),
+            return httpClient.send(requestBuilder.uri(URI.create(baseAddress + urls.get(api))).build(),
                                    HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,8 +83,10 @@ public class Client {
 
     public HttpResponse<String> sendSecureRequest(Apis api, HttpRequest.Builder requestBuilder) {
         try {
-            return httpClient.send(Control.addSecurityHeaders(requestBuilder.uri(URI.create(urls.get(api)))).build(),
-                                   HttpResponse.BodyHandlers.ofString());
+            return httpClient.send(Control.addSecurityHeaders(
+                    requestBuilder.uri(URI.create(baseAddress + urls.get(api)))
+                    ).build(),
+                    HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
         }
