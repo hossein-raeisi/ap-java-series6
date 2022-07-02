@@ -1,13 +1,12 @@
 package server.models.user;
 
 
-
-public class Bot extends User{
+public class Bot extends User {
     public int lastNumber = 0;
 
     public int play(int lastNumber) {
         try {
-            Thread.sleep((numbers.get(0)-lastNumber)* 1000L);
+            Thread.sleep((numbers.get(0) - lastNumber) * 1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -21,7 +20,7 @@ public class Bot extends User{
     public String toString() {
         return "Bot{" +
                 "id=" + id +
-                "cards number=" + numbers.size()+
+                "cards number=" + numbers.size() +
                 '}';
     }
 }

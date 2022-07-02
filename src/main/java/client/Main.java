@@ -10,13 +10,13 @@ public class Main {
 
         Control.createGame();
         Thread thread = new Thread(() -> {
-            while (! Control.isOver()){
+            while (!Control.isOver()) {
                 Control.getInputAndSend();
             }
         });
         thread.start();
 
-        while (! Control.isOver()){
+        while (!Control.isOver()) {
             Control.checkUpdate();
         }
         Console.getInstance().printGameResult(Client.getAnInstance().getGameInfo().life == 0);

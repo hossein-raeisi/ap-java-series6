@@ -3,7 +3,6 @@ package server.security;
 import server.models.game.Game;
 import server.models.user.Player;
 import spark.Request;
-import spark.Session;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class Control {
     public static Game getGameFromAuthToken(String authToken) {
         Player player = getPlayerFromAuthToken(authToken);
 
-        for (Game game: activeGames) {
+        for (Game game : activeGames) {
             if (game.getUsers().contains(player)) {
                 return game;
             }
@@ -70,11 +69,11 @@ public class Control {
         return authTokens.get(authToken);
     }
 
-    public static void addGame(Game game){
+    public static void addGame(Game game) {
         activeGames.add(game);
     }
 
-    public static void removeGame(Game game){
+    public static void removeGame(Game game) {
         activeGames.remove(game);
     }
 }

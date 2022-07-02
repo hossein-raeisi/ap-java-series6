@@ -15,7 +15,7 @@ public class GameApi {
         Player player = Control.getPlayerFromAuthToken(request.headers("Auth-Token"));
         int botNumbers = Integer.parseInt(request.body());
 
-        response.body(GameHelper.createGame(player,botNumbers));
+        response.body(GameHelper.createGame(player, botNumbers));
         return response.body();
     }
 
@@ -35,7 +35,7 @@ public class GameApi {
     public static String isUpdated(Request request, Response response) {
         Game game = Control.getGameFromAuthToken(request.headers("Auth-Token"));
         String clientGameInfo = request.body();
-        response.body(GameHelper.isUpdated(game,clientGameInfo));
+        response.body(GameHelper.isUpdated(game, clientGameInfo));
         return response.body();
     }
 

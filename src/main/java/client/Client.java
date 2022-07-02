@@ -1,8 +1,8 @@
 package client;
 
-import commons.dataClasses.UserInfo;
-import commons.dataClasses.GameInfo;
 import client.security.Control;
+import commons.dataClasses.GameInfo;
+import commons.dataClasses.UserInfo;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,33 +11,17 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 public class Client {
+    private static final String baseAddress = Config.SERVER_ADDRESS;
     private static Client client;
+    private static final HashMap<Apis, String> urls = new HashMap<>();
+    HttpClient httpClient;
     private GameInfo gameInfo;
     private UserInfo userInfo;
 
-    private static final String baseAddress = Config.SERVER_ADDRESS;
-
-    public enum Apis {
-        Test_Hello,
-
-        User_GetUserInfo,
-
-        Game_CreateGame,
-        Game_JoinGame,
-        Game_GetUsersInfo,
-        Game_IsUpdated,
-        Game_GameInfo,
-
-        Play_PlayNumber,
-        Play_PlayNinja,
-
-        Auth_Login,
-        Auth_Logout,
+    private Client() {
+        httpClient = HttpClient.newHttpClient();
+        mapUrls();
     }
-
-    private static HashMap<Apis, String> urls = new HashMap<>();
-
-    HttpClient httpClient;
 
     public static Client getAnInstance() {
         if (client == null) {
@@ -45,11 +29,6 @@ public class Client {
         }
 
         return client;
-    }
-
-    private Client() {
-        httpClient = HttpClient.newHttpClient();
-        mapUrls();
     }
 
     public static void mapUrls() {
@@ -73,7 +52,7 @@ public class Client {
     public HttpResponse<String> sendRequest(Apis api, HttpRequest.Builder requestBuilder) {
         try {
             return httpClient.send(requestBuilder.uri(URI.create(baseAddress + urls.get(api))).build(),
-                                   HttpResponse.BodyHandlers.ofString());
+                    HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +62,7 @@ public class Client {
     public HttpResponse<String> sendSecureRequest(Apis api, HttpRequest.Builder requestBuilder) {
         try {
             return httpClient.send(Control.addSecurityHeaders(
-                    requestBuilder.uri(URI.create(baseAddress + urls.get(api)))
+                            requestBuilder.uri(URI.create(baseAddress + urls.get(api)))
                     ).build(),
                     HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
@@ -92,18 +71,37 @@ public class Client {
         return null;
     }
 
-
     public GameInfo getGameInfo() {
         return gameInfo;
     }
-
-    public UserInfo getUserInfo() { return userInfo; }
 
     public void setGameInfo(GameInfo gameInfo) {
         this.gameInfo = gameInfo;
     }
 
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public enum Apis {
+        Test_Hello,
+
+        User_GetUserInfo,
+
+        Game_CreateGame,
+        Game_JoinGame,
+        Game_GetUsersInfo,
+        Game_IsUpdated,
+        Game_GameInfo,
+
+        Play_PlayNumber,
+        Play_PlayNinja,
+
+        Auth_Login,
+        Auth_Logout,
     }
 }

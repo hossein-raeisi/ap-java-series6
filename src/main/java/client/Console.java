@@ -10,28 +10,29 @@ import java.util.Scanner;
 public class Console {
     private static Console console;
     private final Scanner sc = new Scanner(System.in);
-    public static Console getInstance(){
-        if(console != null) console = new Console();
+
+    public static Console getInstance() {
+        if (console != null) console = new Console();
         return console;
     }
 
-    public void print(GameInfo gameInfo, ArrayList<UserInfo> usersInfo,int clientPlayerId){
+    public void print(GameInfo gameInfo, ArrayList<UserInfo> usersInfo, int clientPlayerId) {
         printGame(gameInfo);
-        printUsers(usersInfo,clientPlayerId);
+        printUsers(usersInfo, clientPlayerId);
     }
 
-    public int getBotNumber(){
+    public int getBotNumber() {
         System.out.println("enter bot players number");
         return sc.nextInt();
     }
 
-    void printGame(GameInfo gameInfo){
+    void printGame(GameInfo gameInfo) {
         System.out.println(
                 "level:" + gameInfo.level +
-                "\tplayers:" + gameInfo.usersNumber +
-                "\theart:" + gameInfo.life +
-                "\tNinja:" + gameInfo.ninjaNumber +
-                "\tlast card number:" + gameInfo.lastNumber);
+                        "\tplayers:" + gameInfo.usersNumber +
+                        "\theart:" + gameInfo.life +
+                        "\tNinja:" + gameInfo.ninjaNumber +
+                        "\tlast card number:" + gameInfo.lastNumber);
 
         // TODO users should be printed right after game gets printed
     }
@@ -40,7 +41,7 @@ public class Console {
     void printUsers(ArrayList<UserInfo> usersInfo, int clientPlayerId) {
         UserInfo clientPlayerInfo = null;
 
-        for (UserInfo userInfo: usersInfo) {
+        for (UserInfo userInfo : usersInfo) {
             if (userInfo.id == clientPlayerId) {
                 clientPlayerInfo = userInfo;
             }
@@ -55,9 +56,9 @@ public class Console {
     void printUser(UserInfo userInfo) {
         System.out.println(
                 "User {" +
-                "id: " + userInfo.id +
-                "cards number: " + userInfo.cardsNumber +
-                "}"
+                        "id: " + userInfo.id +
+                        "cards number: " + userInfo.cardsNumber +
+                        "}"
         );
     }
 
@@ -67,14 +68,14 @@ public class Console {
         );
     }
 
-    public int getNumberOrNinja(){
+    public int getNumberOrNinja() {
         Scanner sc = new Scanner(System.in);
         int number;
-        while (true){
+        while (true) {
             String input = sc.next();
-            try{
+            try {
                 number = Integer.parseInt(input);
-            }catch (NumberFormatException nfe){
+            } catch (NumberFormatException nfe) {
                 continue;
             }
             break;
@@ -82,8 +83,8 @@ public class Console {
         return number;
     }
 
-    void printGameResult(boolean won){
-        String result = won? "won":"lost";
-        System.out.println("You "+result);
+    void printGameResult(boolean won) {
+        String result = won ? "won" : "lost";
+        System.out.println("You " + result);
     }
 }

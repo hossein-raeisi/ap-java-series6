@@ -10,7 +10,7 @@ public class PlayHelper {
     public static boolean playNumber(Player player, Game game, int number) {
         final boolean[] result = new boolean[1];
 
-        Thread thread = new Thread(() -> result[0] = game.update(player.play(number),false));
+        Thread thread = new Thread(() -> result[0] = game.update(player.play(number), false));
         thread.start();
         try {
             thread.join();

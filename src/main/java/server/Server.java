@@ -1,14 +1,14 @@
 package server;
 
-import static spark.Spark.*;
-
 import server.api.GameApi;
 import server.api.PlayApi;
 import server.api.UserApi;
-import server.security.SecurityApi;
 import server.security.Control;
+import server.security.SecurityApi;
 import spark.Request;
 import spark.Response;
+
+import static spark.Spark.*;
 
 public class Server {
     public static Server server;
@@ -19,6 +19,13 @@ public class Server {
         }
 
         return server;
+    }
+
+    public static String TestApi(Request request, Response response) {
+        System.out.println(request.session().isNew());
+
+        response.body("fuck you");
+        return response.body();
     }
 
     public void start(int server_port) {
@@ -56,12 +63,5 @@ public class Server {
                 post("/logout", SecurityApi::logout);
             });
         });
-    }
-
-    public static String TestApi(Request request, Response response) {
-        System.out.println(request.session().isNew());
-
-        response.body("fuck you");
-        return response.body();
     }
 }
