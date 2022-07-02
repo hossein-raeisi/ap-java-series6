@@ -73,7 +73,8 @@ public class Control {
     public static void addGame(Game game){
         activeGames.add(game);
     }
-    public static void  removeGame(Game game){
+
+    public static void removeGame(Game game){
         activeGames.remove(game);
     }
 }
