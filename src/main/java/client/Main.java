@@ -14,7 +14,7 @@ public class Main {
         });
         thread.start();
         while (! Control.isOver()){
-            Control.update();
+            Control.checkUpdate();
         }
         Console.getInstance().printGameResult(Client.getAnInstance().getGameInfo().life == 0);
     }

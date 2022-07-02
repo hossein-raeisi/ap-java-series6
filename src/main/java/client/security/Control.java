@@ -47,6 +47,7 @@ public class Control {
         var request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(""+botsNumber));
         var response = client.sendSecureRequest(Client.Apis.Game_CreateGame, request);
         client.setGameInfo(gson.fromJson(response.body(), GameInfo.class));
+        update();
     }
 
     public static void getInputAndSend(){//number or ninja
