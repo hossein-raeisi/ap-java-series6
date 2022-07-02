@@ -15,8 +15,7 @@ public class Client {
     private GameInfo gameInfo;
     private UserInfo userInfo;
 
-    private static final int SERVER_PORT = 5555;
-    private static final String baseAddress = "http://localhost:" + SERVER_PORT + "/api";
+    private static final String baseAddress = Config.SERVER_ADDRESS;
 
     public enum Apis {
         Test_Hello,

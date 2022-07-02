@@ -22,7 +22,7 @@ public class Config {
         InputStream inputStream = null;
 
         try {
-            inputStream = new FileInputStream(new File("src/java/client/config.yaml"));
+            inputStream = new FileInputStream(new File("src/main/java/client/config.yaml"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

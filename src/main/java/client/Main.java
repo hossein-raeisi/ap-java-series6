@@ -5,7 +5,9 @@ import client.security.Control;
 public class Main {
 
     public static void main(String[] args) {
+        Config.loadConfig();
         Control.logIn();
+
         Control.createGame();
         Thread thread = new Thread(() -> {
             while (! Control.isOver()){
@@ -13,6 +15,7 @@ public class Main {
             }
         });
         thread.start();
+
         while (! Control.isOver()){
             Control.checkUpdate();
         }
