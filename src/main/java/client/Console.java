@@ -10,8 +10,9 @@ import java.util.Scanner;
 public class Console {
     private static Console console;
     private final Scanner sc = new Scanner(System.in);
+
     public static Console getInstance(){
-        if(console != null) console = new Console();
+        if(console == null) console = new Console();
         return console;
     }
 
