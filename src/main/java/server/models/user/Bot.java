@@ -10,6 +10,7 @@ public class Bot extends User {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        if(this.numbers.size() == 0) return -1;
         int number = this.numbers.get(0);
         this.numbers.remove(Integer.valueOf(number));
         this.lastNumber = number;

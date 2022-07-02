@@ -8,16 +8,16 @@ public class Main {
         Config.loadConfig();
         Control.logIn();
 
-        Control.createGame();
+        Controller.createGame();
         Thread thread = new Thread(() -> {
-            while (!Control.isOver()) {
-                Control.getInputAndSend();
+            while (!Controller.isOver()) {
+                Controller.getInputAndSend();
             }
         });
         thread.start();
 
-        while (!Control.isOver()) {
-            Control.checkUpdate();
+        while (!Controller.isOver()) {
+            Controller.checkUpdate();
         }
         Console.getInstance().printGameResult(Client.getAnInstance().getGameInfo().life == 0);
     }

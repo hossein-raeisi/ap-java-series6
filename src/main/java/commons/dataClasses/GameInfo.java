@@ -20,6 +20,17 @@ public class GameInfo {
     }
 
     @Override
+    public String toString() {
+        return "GameInfo{" +
+                "level=" + level +
+                ", usersNumber=" + usersNumber +
+                ", life=" + life +
+                ", ninjaNumber=" + ninjaNumber +
+                ", lastNumber=" + lastNumber +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

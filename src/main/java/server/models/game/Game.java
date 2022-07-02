@@ -26,23 +26,23 @@ public class Game {
 
     public Game(ArrayList<User> users) {
         Control.addGame(this);
-
         this.users = users;
         life = users.size();
         int maxLevel = 100 / users.size();
+        Thread thread = new Thread(() -> {
+            while (++level <= maxLevel && life > 0) {
+                time = LocalTime.now();
+                if (Arrays.asList(3, 6, 9).contains(level)) life++;
+                if (Arrays.asList(2, 5, 8).contains(level)) ninjaNumber++;
 
-        while (++level <= maxLevel && life > 0) {
-            time = LocalTime.now();
-            if (Arrays.asList(3, 6, 9).contains(level)) life++;
-            if (Arrays.asList(2, 5, 8).contains(level)) ninjaNumber++;
-
-            setCards();
-            setAndRunThreads();
-            resetBotsTiming();
-            lastNumber = 0;
-        }
-        gameOver();
-
+                setCards();
+                setAndRunThreads();
+                resetBotsTiming();
+                lastNumber = 0;
+            }
+            gameOver();
+        });
+        thread.start();
     }
 
     public int getLife() {
@@ -124,16 +124,26 @@ public class Game {
         lastNumber = number;
         semaphore.release();
         updated = true;
+        if(allCardAreUsed()) closeThreads();
+        return true;
+    }
+
+    private boolean allCardAreUsed(){
+        for (User user:
+             users) {
+            if(user.numbers.size() != 0) return false;
+        }
         return true;
     }
 
     public boolean useNinja() {
         if (this.ninjaNumber == 0) return false;
+        this.ninjaNumber--;
         int max = 0;
         for (User user : users) {
-            int min = Math.max(max, user.numbers.get(0));
-            user.numbers.remove(Integer.valueOf(min));
-            max = Math.max(min, max);
+            if(user.numbers.size() ==0) continue;
+            max = Math.max(max, user.numbers.get(0));
+            user.numbers.remove(0);
         }
         update(max, true);
         return true;
@@ -146,15 +156,18 @@ public class Game {
             gameOver();
         }
     }
-
-    void gameOver() {
-        Control.removeGame(this);
+    void closeThreads(){
         for (Thread thread :
                 threads) {
             if (thread != Thread.currentThread())
                 thread.stop();
         }
         Thread.currentThread().stop();
+    }
+
+    void gameOver() {
+        Control.removeGame(this);
+        closeThreads();
     }
 
     public boolean isUpdated() {

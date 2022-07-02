@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class Client {
     private static final String baseAddress = Config.SERVER_ADDRESS;
-    private static Client client;
+    volatile private static Client client;
     private static final HashMap<Apis, String> urls = new HashMap<>();
     HttpClient httpClient;
     private GameInfo gameInfo;

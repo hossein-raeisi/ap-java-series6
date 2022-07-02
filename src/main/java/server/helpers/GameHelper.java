@@ -40,8 +40,8 @@ public class GameHelper {
 
     public static String isUpdated(Game game, String clientGameInfo) {
         String gameInfo = toString(getGameInfo(game));
-        boolean isTheSame = gameInfo.equals(clientGameInfo);
-        return isTheSame + "";
+        boolean isUpdated = ! gameInfo.equals(clientGameInfo);
+        return isUpdated + "";
     }
 
 
