@@ -2,7 +2,6 @@ package client;
 
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -22,7 +21,7 @@ public class Config {
         InputStream inputStream = null;
 
         try {
-            inputStream = new FileInputStream(new File("src/main/java/client/config.yaml"));
+            inputStream = new FileInputStream("src/main/java/client/config.yaml");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
