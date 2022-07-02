@@ -2,6 +2,7 @@ package server.models.game;
 import server.models.user.Bot;
 import server.models.user.Player;
 import server.models.user.User;
+import server.security.Control;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -22,7 +23,21 @@ public class Game {
     public LocalTime time;
     boolean updated;
 
+    public int getLife() {
+        return life;
+    }
+
+    public int getNinjaNumber() {
+        return ninjaNumber;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
     public Game(ArrayList<User> users){
+        Control.addGame(this);
+
         this.users = users;
         life = users.size();
         int maxLevel = 100 / users.size();
@@ -37,7 +52,7 @@ public class Game {
             resetBotsTiming();
             lastNumber = 0;
         }
-        if(life != 0) gameOver(true);
+        gameOver();
 
     }
     void resetBotsTiming(){
@@ -126,17 +141,17 @@ public class Game {
         life--;
 
         if(life == 0){
-            gameOver(false);
+            gameOver();
         }
     }
 
-    void gameOver(boolean victory){
+    void gameOver(){
+        Control.removeGame(this);
         for (Thread thread :
                 threads) {
             if(thread != Thread.currentThread())
                 thread.stop();
         }
-        System.out.println(victory?"You won!":"You lost");
         Thread.currentThread().stop();
     }
 

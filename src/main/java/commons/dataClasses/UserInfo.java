@@ -9,6 +9,13 @@ public class UserInfo {
 
     public int id;
     public Type type;
-    public int[] cards;
+    public Integer[] cards;
     public int cardsNumber;
+
+    public UserInfo(int id, Type type, Integer[] cards, int cardsNumber) {
+        this.id = id;
+        this.type = type;
+        this.cards = cards;
+        this.cardsNumber = cardsNumber;
+    }
 }

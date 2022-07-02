@@ -10,7 +10,7 @@ public abstract class User{
     public ArrayList<Integer> numbers = new ArrayList<>();
 
     public User(){
-        id = "++idCounter;";
+        id = ++idCounter+"";
     }
 
 

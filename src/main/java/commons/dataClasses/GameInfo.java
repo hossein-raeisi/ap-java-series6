@@ -14,4 +14,16 @@ public class GameInfo {
         this.ninjaNumber = ninjaNumber;
         this.lastNumber = lastNumber;
     }
+    public boolean isOver(){
+        if(life == 0) return true;
+        return level > 100 / usersNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameInfo gameInfo = (GameInfo) o;
+        return level == gameInfo.level && usersNumber == gameInfo.usersNumber && life == gameInfo.life && ninjaNumber == gameInfo.ninjaNumber && lastNumber == gameInfo.lastNumber;
+    }
 }

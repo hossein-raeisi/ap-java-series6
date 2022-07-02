@@ -8,20 +8,37 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Console {
+    private static Console console;
+    private final Scanner sc = new Scanner(System.in);
+    public static Console getInstance(){
+        if(console != null) console = new Console();
+        return console;
+    }
+
+    public void print(GameInfo gameInfo, ArrayList<UserInfo> usersInfo,int clientPlayerId){
+        printGame(gameInfo);
+        printUsers(usersInfo,clientPlayerId);
+    }
+
+    public int getBotNumber(){
+        System.out.println("enter bot players number");
+        return sc.nextInt();
+    }
 
     void printGame(GameInfo gameInfo){
         System.out.println(
                 "level:" + gameInfo.level +
-                "players:" + gameInfo.usersNumber +
-                "heart:" + gameInfo.life +
+                "\tplayers:" + gameInfo.usersNumber +
+                "\theart:" + gameInfo.life +
                 "\tNinja:" + gameInfo.ninjaNumber +
                 "\tlast card number:" + gameInfo.lastNumber);
 
         // TODO users should be printed right after game gets printed
     }
 
+
     void printUsers(ArrayList<UserInfo> usersInfo, int clientPlayerId) {
-        UserInfo clientPlayerInfo = new UserInfo();
+        UserInfo clientPlayerInfo = null;
 
         for (UserInfo userInfo: usersInfo) {
             if (userInfo.id == clientPlayerId) {
@@ -31,6 +48,7 @@ public class Console {
             printUser(userInfo);
         }
 
+        assert clientPlayerInfo != null;
         printClientPlayer(clientPlayerInfo);
     }
 
@@ -49,7 +67,7 @@ public class Console {
         );
     }
 
-    int getNumberOrNinja(){
+    public int getNumberOrNinja(){
         Scanner sc = new Scanner(System.in);
         int number;
         while (true){
@@ -62,5 +80,10 @@ public class Console {
             break;
         }
         return number;
+    }
+
+    void printGameResult(boolean won){
+        String result = won? "won":"lost";
+        System.out.println("You "+result);
     }
 }

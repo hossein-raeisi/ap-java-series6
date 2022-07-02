@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 public class Client {
     private static Client client;
+    private GameInfo gameInfo;
+    private UserInfo userInfo;
 
     private static final int SERVER_PORT = 5555;
     private static final String baseAddress = "http://localhost:" + SERVER_PORT + "/api";
@@ -91,10 +93,16 @@ public class Client {
 
 
     public GameInfo getGameInfo() {
-        return null;
+        return gameInfo;
     }
 
-    public UserInfo getUserInfo() {
-        return null;
+    public UserInfo getUserInfo() { return userInfo; }
+
+    public void setGameInfo(GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }
