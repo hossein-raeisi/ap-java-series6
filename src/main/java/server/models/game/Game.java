@@ -114,7 +114,7 @@ public class Game {
 
         for (User user : users) {
             user.numbers.removeIf(n -> n == number);
-            flag = flag || user.numbers.removeIf(n -> n < number);
+            flag = flag | user.numbers.removeIf(n -> n < number);
         }
         if (flag && (!isNinja)) {
             loseLife();
@@ -160,9 +160,9 @@ public class Game {
         for (Thread thread :
                 threads) {
             if (thread != Thread.currentThread())
-                thread.stop();
+                thread.interrupt();
         }
-        Thread.currentThread().stop();
+        Thread.currentThread().interrupt();
     }
 
     void gameOver() {

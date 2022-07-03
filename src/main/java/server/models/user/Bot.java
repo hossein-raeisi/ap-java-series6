@@ -1,6 +1,8 @@
 package server.models.user;
 
 
+import server.models.game.MyThread;
+
 public class Bot extends User {
     public int lastNumber = 0;
 
@@ -8,7 +10,9 @@ public class Bot extends User {
         try {
             Thread.sleep((numbers.get(0) - lastNumber) * 1000L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            MyThread thread = (MyThread) Thread.currentThread();
+            thread.running = false;
+            return -1;
         }
         if(this.numbers.size() == 0) return -1;
         int number = this.numbers.get(0);
