@@ -75,9 +75,6 @@ public class Controller {
         Client client = Client.getAnInstance();
         var request = HttpRequest.newBuilder().GET();
         var response = client.sendSecureRequest(Client.Apis.Game_GetUsersInfo, request);
-//        Type listOfUserInfoClassObject = new TypeToken<ArrayList<UserInfo>>() { }.getType();
-
-//        return new ArrayList<>(Arrays.asList(gson.fromJson(response.body(), listOfUserInfoClassObject)));
         return new ArrayList<>(Arrays.asList(gson.fromJson(response.body(), UserInfo[].class)));
     }
     static boolean flag = false;
@@ -86,24 +83,29 @@ public class Controller {
         var request = HttpRequest.newBuilder().GET();
         var response = client.sendSecureRequest(Client.Apis.Lobby_isStarted,request);
         String result = response.body();
-        switch (result) {
-            case "0" -> {
+        switch (result.charAt(0)) {
+            case '0' -> {
                 if (!flag) {
                     System.out.println("Please wait for host to start the game");
                     flag = true;
                 }
                 try {
-                    Thread.sleep(2);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 checkForCreateOrJoin();
             }
-            case "1" -> {
+            case '1' -> {
                 System.out.println("creating game...");
                 createGame();
             }
-            case "2" -> System.out.println("loading game...");
+            case '2' -> {
+                System.out.println("loading game...");
+                String gameInfo = result.substring(1);
+                GameInfo gameInfo1 = gson.fromJson(gameInfo,GameInfo.class);
+                Client.getAnInstance().setGameInfo(gameInfo1);
+            }
             default -> System.out.println("error");
         }
     }
