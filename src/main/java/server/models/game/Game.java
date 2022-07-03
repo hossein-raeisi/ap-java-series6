@@ -70,7 +70,7 @@ public class Game {
         int size = level * users.size();
         ArrayList<Integer> randomNumbers = new ArrayList<>();
 
-        while (randomNumbers.size() <= size) {
+        while (randomNumbers.size() < size) {
             int random = new Random().nextInt(100) + 1;
             if (randomNumbers.contains(random)) continue;
             randomNumbers.add(random);
