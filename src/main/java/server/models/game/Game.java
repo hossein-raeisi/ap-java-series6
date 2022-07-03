@@ -166,7 +166,6 @@ public class Game {
     }
 
     void gameOver() {
-        Control.removeGame(this);
         closeThreads();
     }
 

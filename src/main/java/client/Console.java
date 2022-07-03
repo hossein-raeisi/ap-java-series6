@@ -34,7 +34,6 @@ public class Console {
                         "\tNinja:" + gameInfo.ninjaNumber +
                         "\tlast card number:" + gameInfo.lastNumber);
 
-        // TODO users should be printed right after game gets printed
     }
 
 

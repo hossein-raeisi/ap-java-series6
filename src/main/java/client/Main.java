@@ -19,7 +19,7 @@ public class Main {
         while (!Controller.isOver()) {
             Controller.checkUpdate();
         }
-        Console.getInstance().printGameResult(Client.getAnInstance().getGameInfo().life == 0);
+        Console.getInstance().printGameResult(Client.getAnInstance().getGameInfo().life != 0);
     }
 }
 

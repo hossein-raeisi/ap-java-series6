@@ -7,7 +7,7 @@ import java.util.UUID;
 public abstract class User {
 
     public String id;
-    public ArrayList<Integer> numbers = new ArrayList<>();
+    volatile public ArrayList<Integer> numbers = new ArrayList<>();
 
     public User() {
         id = generateId();
