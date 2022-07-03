@@ -1,6 +1,8 @@
 package server.api;
 
+import server.helpers.GameHelper;
 import server.helpers.LobbyHelper;
+import server.models.game.Game;
 import server.models.user.Player;
 import server.security.Control;
 import spark.Request;
@@ -20,7 +22,8 @@ public class LobbyApi {
 
     public static String isStarted(Request request, Response response){
         Player player = Control.getPlayerFromAuthToken(request.headers("Auth-Token"));
-        response.body(LobbyHelper.isStarted(player));
+        Game game = Control.getGameFromAuthToken(request.headers("Auth-Token"));
+        response.body(LobbyHelper.isStarted(player, game));
         return response.body();
     }
 }

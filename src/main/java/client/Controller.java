@@ -105,6 +105,8 @@ public class Controller {
                 String gameInfo = result.substring(1);
                 GameInfo gameInfo1 = gson.fromJson(gameInfo,GameInfo.class);
                 Client.getAnInstance().setGameInfo(gameInfo1);
+                System.out.println(gameInfo1);
+                update();
             }
             default -> System.out.println("error");
         }
