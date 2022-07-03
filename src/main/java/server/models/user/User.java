@@ -5,7 +5,7 @@ import java.util.UUID;
 
 
 public abstract class User {
-
+    public String name;
     public String id;
     volatile public ArrayList<Integer> numbers = new ArrayList<>();
 

@@ -45,6 +45,8 @@ public class Client {
         urls.put(Apis.Play_PlayNumber, "/play/playNumber");
         urls.put(Apis.Play_PlayNinja, "/play/playNinja");
 
+        urls.put(Apis.Lobby_isStarted, "/lobby/isStarted");
+
         urls.put(Apis.Auth_Login, "/auth/login");
         urls.put(Apis.Auth_Logout, "/auth/logout");
     }
@@ -97,6 +99,8 @@ public class Client {
         Game_GetUsersInfo,
         Game_IsUpdated,
         Game_GameInfo,
+
+        Lobby_isStarted,
 
         Play_PlayNumber,
         Play_PlayNinja,

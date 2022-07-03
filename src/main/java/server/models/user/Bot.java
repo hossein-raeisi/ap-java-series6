@@ -5,7 +5,10 @@ import server.models.game.MyThread;
 
 public class Bot extends User {
     public int lastNumber = 0;
-
+    public Bot(){
+        super();
+        this.name = id;
+    }
     public int play(int lastNumber) {
         try {
             Thread.sleep((numbers.get(0) - lastNumber) * 1000L);

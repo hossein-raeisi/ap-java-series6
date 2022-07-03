@@ -10,7 +10,7 @@ public class UserHelper {
         UserInfo.Type type = user instanceof Player ? UserInfo.Type.user : UserInfo.Type.bot;
         Integer[] cards = user.numbers.toArray(new Integer[0]);
         int cardsNumber = cards.length;
-        return new UserInfo(user.id, type, cards, cardsNumber);
+        return new UserInfo(user.id,user.name, type, cards, cardsNumber);
     }
 
 }

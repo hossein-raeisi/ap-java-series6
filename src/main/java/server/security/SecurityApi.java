@@ -1,5 +1,6 @@
 package server.security;
 
+import server.api.LobbyApi;
 import server.models.user.Player;
 import spark.Request;
 import spark.Response;
@@ -8,7 +9,8 @@ public class SecurityApi {
 
     public static String login(Request request, Response response) {
         String authToken = Control.generateAuthToken();
-        Player player = new Player();
+        Player player = new Player(request.body());
+        LobbyApi.addPlayerToLobby(player);
         Control.addAuthToken(authToken, player);
 
         response.header("Auth-Token", authToken);

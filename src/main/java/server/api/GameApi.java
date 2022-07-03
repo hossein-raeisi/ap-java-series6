@@ -13,9 +13,9 @@ public class GameApi {
     public static String createGame(Request request, Response response) {
 
         Player player = Control.getPlayerFromAuthToken(request.headers("Auth-Token"));
-        int botNumbers = Integer.parseInt(request.body());
+        int otherUsersNumber = Integer.parseInt(request.body());
 
-        response.body(GameHelper.createGame(player, botNumbers));
+        response.body(GameHelper.createGame(player, otherUsersNumber));
         return response.body();
     }
 

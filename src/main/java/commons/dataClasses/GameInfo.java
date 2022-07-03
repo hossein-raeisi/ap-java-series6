@@ -16,7 +16,7 @@ public class GameInfo {
     }
     public boolean isOver(){
         if(life == 0) return true;
-        return level > 100 / usersNumber;
+        return level > 100 / usersNumber || level > 13;
     }
 
     @Override
