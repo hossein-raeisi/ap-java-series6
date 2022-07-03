@@ -1,12 +1,14 @@
 package server;
 
 import server.api.GameApi;
+import server.api.LobbyApi;
 import server.api.PlayApi;
 import server.api.UserApi;
 import server.security.Control;
 import server.security.SecurityApi;
 import spark.Request;
 import spark.Response;
+import spark.RouteGroup;
 
 import static spark.Spark.*;
 
@@ -37,13 +39,9 @@ public class Server {
         path("/api", () -> {
             before("/*", (request, response) -> Control.validateRequest(request));
 
-            path("/test", () -> {
-                get("/hello", Server::TestApi);
-            });
+            path("/test", () -> get("/hello", Server::TestApi));
 
-            path("/user", () -> {
-                get("/getUserInfo", UserApi::getUserInfo);
-            });
+            path("/user", () -> get("/getUserInfo", UserApi::getUserInfo));
 
             path("/game", () -> {
                 post("/createGame", GameApi::createGame);
@@ -53,13 +51,15 @@ public class Server {
                 get("/gameInfo", GameApi::getGameInfo);
             });
 
+            path("/lobby", () -> get("/isStarted", LobbyApi::isStarted));
+
             path("/play", () -> {
                 post("/playNumber", PlayApi::playNumber);
                 post("/playNinja", PlayApi::playNinja);
             });
 
             path("/auth", () -> {
-                get("/login", SecurityApi::login);
+                post("/login", SecurityApi::login);
                 post("/logout", SecurityApi::logout);
             });
         });

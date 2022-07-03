@@ -8,15 +8,16 @@ public class Main {
         Config.loadConfig();
         Control.logIn();
 
-        Controller.createGame();
+        Controller.checkForCreateOrJoin();
+
         Thread thread = new Thread(() -> {
-            while (!Controller.isOver()) {
+            while (Controller.isNotOver()) {
                 Controller.getInputAndSend();
             }
         });
         thread.start();
 
-        while (!Controller.isOver()) {
+        while (Controller.isNotOver()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

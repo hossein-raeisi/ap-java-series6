@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class Controller {
     static Gson gson = new Gson();
+
     public static void createGame() {
         int botsNumber = Console.getInstance().getBotNumber();
         Client client = Client.getAnInstance();
@@ -33,8 +34,8 @@ public class Controller {
         }
     }
 
-    public static boolean isOver() {
-        return Client.getAnInstance().getGameInfo().isOver();
+    public static boolean isNotOver() {
+        return !Client.getAnInstance().getGameInfo().isOver();
     }
 
     public static void checkUpdate() {
@@ -77,6 +78,33 @@ public class Controller {
 //        Type listOfUserInfoClassObject = new TypeToken<ArrayList<UserInfo>>() { }.getType();
 
 //        return new ArrayList<>(Arrays.asList(gson.fromJson(response.body(), listOfUserInfoClassObject)));
-        return new ArrayList<>( Arrays.asList(gson.fromJson(response.body(), UserInfo[].class)));
+        return new ArrayList<>(Arrays.asList(gson.fromJson(response.body(), UserInfo[].class)));
+    }
+    static boolean flag = false;
+    public static void checkForCreateOrJoin(){
+        Client client = Client.getAnInstance();
+        var request = HttpRequest.newBuilder().GET();
+        var response = client.sendSecureRequest(Client.Apis.Lobby_isStarted,request);
+        String result = response.body();
+        switch (result) {
+            case "0" -> {
+                if (!flag) {
+                    System.out.println("Please wait for host to start the game");
+                    flag = true;
+                }
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                checkForCreateOrJoin();
+            }
+            case "1" -> {
+                System.out.println("creating game...");
+                createGame();
+            }
+            case "2" -> System.out.println("loading game...");
+            default -> System.out.println("error");
+        }
     }
 }

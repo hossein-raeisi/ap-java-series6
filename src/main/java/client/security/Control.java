@@ -1,7 +1,8 @@
 package client.security;
 
 import client.Client;
-import com.google.gson.Gson;
+import client.Console;
+
 import java.net.http.HttpRequest;
 
 public class Control {
@@ -24,8 +25,8 @@ public class Control {
 
     public static void logIn() {
         Client client = Client.getAnInstance();
-
-        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().GET();
+        String name = Console.getInstance().getName();
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(name));
         var response = client.sendRequest(Client.Apis.Auth_Login, requestBuilder);
 
         authToken = String.valueOf(response.headers().firstValue("auth-token").stream().toArray()[0]);

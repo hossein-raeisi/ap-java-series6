@@ -3,6 +3,7 @@ package server.helpers;
 import com.google.gson.Gson;
 import commons.dataClasses.GameInfo;
 import commons.dataClasses.UserInfo;
+import server.api.LobbyApi;
 import server.models.game.Game;
 import server.models.user.Bot;
 import server.models.user.Player;
@@ -11,11 +12,20 @@ import server.models.user.User;
 import java.util.ArrayList;
 
 public class GameHelper {
-    public static String createGame(Player player, int botNumbers) {
+    public static String createGame(Player player, int otherUsersNumber) {
+        int size = otherUsersNumber + 1;
+
         ArrayList<User> users = new ArrayList<>();
         users.add(player);
-        for (int i = 0; i < botNumbers; i++) {
-            users.add(new Bot());
+        LobbyApi.removePlayerFromLobby(player);
+        while (users.size() < size){
+            if(LobbyApi.lobbyPlayers.size() > 0){
+                Player player1 = LobbyApi.lobbyPlayers.get(0);
+                users.add(player1);
+                LobbyApi.removePlayerFromLobby(player1);
+            }else {
+                users.add(new Bot());
+            }
         }
         Game game = new Game(users);
         return toString(getGameInfo(game));

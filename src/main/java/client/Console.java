@@ -55,7 +55,7 @@ public class Console {
     void printUser(UserInfo userInfo) {
         System.out.println(
                 "User {" +
-                        "id: " + userInfo.id +
+                        "name: " + userInfo.name +
                         "\tcards number: " + userInfo.cardsNumber +
                         "}"
         );
@@ -85,5 +85,10 @@ public class Console {
     void printGameResult(boolean won) {
         String result = won ? "won" : "lost";
         System.out.println("You " + result);
+    }
+    public String getName(){
+        System.out.println("Please enter your name");
+        Scanner sc = new Scanner(System.in);
+        return sc.next();
     }
 }
