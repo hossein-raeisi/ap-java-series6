@@ -26,23 +26,23 @@ public class Game {
 
     public Game(ArrayList<User> users) {
         Control.addGame(this);
-
         this.users = users;
         life = users.size();
         int maxLevel = 100 / users.size();
+        Thread thread = new Thread(() -> {
+            while (++level <= maxLevel && life > 0) {
+                time = LocalTime.now();
+                if (Arrays.asList(3, 6, 9).contains(level)) life++;
+                if (Arrays.asList(2, 5, 8).contains(level)) ninjaNumber++;
 
-        while (++level <= maxLevel && life > 0) {
-            time = LocalTime.now();
-            if (Arrays.asList(3, 6, 9).contains(level)) life++;
-            if (Arrays.asList(2, 5, 8).contains(level)) ninjaNumber++;
-
-            setCards();
-            setAndRunThreads();
-            resetBotsTiming();
-            lastNumber = 0;
-        }
-        gameOver();
-
+                setCards();
+                setAndRunThreads();
+                resetBotsTiming();
+                lastNumber = 0;
+            }
+            gameOver();
+        });
+        thread.start();
     }
 
     public int getLife() {
@@ -70,7 +70,7 @@ public class Game {
         int size = level * users.size();
         ArrayList<Integer> randomNumbers = new ArrayList<>();
 
-        while (randomNumbers.size() <= size) {
+        while (randomNumbers.size() < size) {
             int random = new Random().nextInt(100) + 1;
             if (randomNumbers.contains(random)) continue;
             randomNumbers.add(random);
@@ -114,7 +114,7 @@ public class Game {
 
         for (User user : users) {
             user.numbers.removeIf(n -> n == number);
-            flag = flag || user.numbers.removeIf(n -> n < number);
+            flag = flag | user.numbers.removeIf(n -> n < number);
         }
         if (flag && (!isNinja)) {
             loseLife();
@@ -124,16 +124,26 @@ public class Game {
         lastNumber = number;
         semaphore.release();
         updated = true;
+        if(allCardAreUsed()) closeThreads();
+        return true;
+    }
+
+    private boolean allCardAreUsed(){
+        for (User user:
+             users) {
+            if(user.numbers.size() != 0) return false;
+        }
         return true;
     }
 
     public boolean useNinja() {
         if (this.ninjaNumber == 0) return false;
+        this.ninjaNumber--;
         int max = 0;
         for (User user : users) {
-            int min = Math.max(max, user.numbers.get(0));
-            user.numbers.remove(Integer.valueOf(min));
-            max = Math.max(min, max);
+            if(user.numbers.size() ==0) continue;
+            max = Math.max(max, user.numbers.get(0));
+            user.numbers.remove(0);
         }
         update(max, true);
         return true;
@@ -146,15 +156,17 @@ public class Game {
             gameOver();
         }
     }
-
-    void gameOver() {
-        Control.removeGame(this);
+    void closeThreads(){
         for (Thread thread :
                 threads) {
             if (thread != Thread.currentThread())
-                thread.stop();
+                thread.interrupt();
         }
-        Thread.currentThread().stop();
+        Thread.currentThread().interrupt();
+    }
+
+    void gameOver() {
+        closeThreads();
     }
 
     public boolean isUpdated() {

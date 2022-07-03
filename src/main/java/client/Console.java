@@ -12,11 +12,11 @@ public class Console {
     private final Scanner sc = new Scanner(System.in);
 
     public static Console getInstance() {
-        if (console != null) console = new Console();
+        if (console == null) console = new Console();
         return console;
     }
 
-    public void print(GameInfo gameInfo, ArrayList<UserInfo> usersInfo, int clientPlayerId) {
+    public void print(GameInfo gameInfo, ArrayList<UserInfo> usersInfo, String clientPlayerId) {
         printGame(gameInfo);
         printUsers(usersInfo, clientPlayerId);
     }
@@ -34,15 +34,14 @@ public class Console {
                         "\tNinja:" + gameInfo.ninjaNumber +
                         "\tlast card number:" + gameInfo.lastNumber);
 
-        // TODO users should be printed right after game gets printed
     }
 
 
-    void printUsers(ArrayList<UserInfo> usersInfo, int clientPlayerId) {
+    void printUsers(ArrayList<UserInfo> usersInfo, String clientPlayerId) {
         UserInfo clientPlayerInfo = null;
 
         for (UserInfo userInfo : usersInfo) {
-            if (userInfo.id == clientPlayerId) {
+            if (userInfo.id.equals(clientPlayerId)) {
                 clientPlayerInfo = userInfo;
             }
 
@@ -57,7 +56,7 @@ public class Console {
         System.out.println(
                 "User {" +
                         "id: " + userInfo.id +
-                        "cards number: " + userInfo.cardsNumber +
+                        "\tcards number: " + userInfo.cardsNumber +
                         "}"
         );
     }

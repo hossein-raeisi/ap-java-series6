@@ -49,7 +49,7 @@ public class Server {
                 post("/createGame", GameApi::createGame);
                 post("/joinGame", GameApi::joinGame);
                 get("/getUsersInfo", GameApi::getUsersInfo);
-                get("/isUpdated", GameApi::isUpdated);
+                post("/isUpdated", GameApi::isUpdated);
                 get("/gameInfo", GameApi::getGameInfo);
             });
 
