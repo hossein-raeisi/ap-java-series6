@@ -22,7 +22,6 @@ public class Game {
     int ninjaNumber = 2;
     Semaphore semaphore = new Semaphore(1);
     int level = 0;
-    boolean updated;
 
     public Game(ArrayList<User> users) {
         Control.addGame(this);
@@ -123,7 +122,6 @@ public class Game {
         inPlayNumbers.add(number);
         lastNumber = number;
         semaphore.release();
-        updated = true;
         if(allCardAreUsed()) closeThreads();
         return true;
     }
@@ -169,9 +167,6 @@ public class Game {
         closeThreads();
     }
 
-    public boolean isUpdated() {
-        return updated;
-    }
 
     public ArrayList<User> getUsers() {
         return users;

@@ -17,6 +17,11 @@ public class Main {
         thread.start();
 
         while (!Controller.isOver()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Controller.checkUpdate();
         }
         Console.getInstance().printGameResult(Client.getAnInstance().getGameInfo().life != 0);
