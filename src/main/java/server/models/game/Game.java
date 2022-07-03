@@ -29,7 +29,7 @@ public class Game {
         life = users.size();
         int maxLevel = 100 / users.size();
         Thread thread = new Thread(() -> {
-            while (++level <= maxLevel && life > 0) {
+            while (++level <= maxLevel && life > 0 && level < 13) {
                 time = LocalTime.now();
                 if (Arrays.asList(3, 6, 9).contains(level)) life++;
                 if (Arrays.asList(2, 5, 8).contains(level)) ninjaNumber++;
